@@ -39,8 +39,6 @@ func set_in_outs():
         var next_t = tiles[(idx + 1) % len(tiles)]
         var to_next = next_t.position - curr_t.position
         var to_prev = prev_t.position - curr_t.position
-        print("tn: " + str(to_next))
-        print("tp: " + str(to_prev))
         if to_next.x > 0:
             q3 = 1
             q0 = 0
@@ -158,3 +156,10 @@ func move_along(track_coords, cw, delta):
             new_offset = 1
     new_rotation = get_car_rotation(tiles[new_t0], tiles[new_t1], cw)
     return [TrackCoords.new(new_t0, new_t1, new_offset), new_rotation]
+    
+func _process(delta):
+    var cam_center = G.camera.position
+    if position.x > cam_center.x + G.wrap_width * G.tilesize:
+        position.x -= G.level_tile_width * G.tilesize
+    elif position.x < cam_center.x - G.wrap_width * G.tilesize:
+        position.x += G.level_tile_width * G.tilesize
