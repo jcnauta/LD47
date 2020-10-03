@@ -16,7 +16,17 @@ _global_script_class_icons={
 [application]
 
 config/name="LD47"
+run/main_scene="res://scenes/Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+G="*res://G.gd"
+
+[display]
+
+window/size/width=960
+window/size/height=640
 
 [rendering]
 
