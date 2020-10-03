@@ -20,9 +20,11 @@ func _ready():
     add_child(track0)
     var coords1 = [
         Vector2(0, 0),
-        Vector2(0, 4),
+        Vector2(3, 0),
         Vector2(3, 4),
-        Vector2(3, 0)
+        Vector2(6, 4),
+        Vector2(6, 6),
+        Vector2(0, 6)
     ]
     for c_idx in len(coords1):
         coords1[c_idx] += Vector2(7, 3)

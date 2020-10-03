@@ -4,7 +4,7 @@ var current_track = null
 var track_coords = null
 var cw
 var in_out
-var fly_v = Vector2(4, 0)
+var v = Vector2(G.flyspeed, 0)
 
 func _ready():
     position = G.tilesize * Vector2(1, 7)
@@ -25,7 +25,7 @@ func update_track_state(tile):
             in_out = tile.in_outs[1]
         else: # Q2
             in_out = tile.in_outs[2]
-    cw = 1
+    cw = -1
 
 func set_track_coords(tcs):
     self.track_coords = tcs
@@ -33,9 +33,9 @@ func set_track_coords(tcs):
 
 func _physics_process(delta):
     if current_track == null:
-        self.position += fly_v
+        self.position += v * delta
     else:
-        var coords_and_rotation = current_track.move_along(track_coords, cw)
+        var coords_and_rotation = current_track.move_along(track_coords, cw, delta)
         self.set_track_coords(coords_and_rotation[0])
         self.rotation = coords_and_rotation[1]
 

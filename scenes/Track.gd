@@ -112,23 +112,23 @@ func global_position_from_coords(track_coords):
 func get_car_rotation(tile0, tile1, cw):
     if tile0.position.x == tile1.position.x: # same column
         if (cw == 1 and tile1.position.y > tile0.position.y) or \
-           (cw == 0 and tile1.position.y < tile0.position.y):
+           (cw == -1 and tile1.position.y > tile0.position.y):
             return PI / 2.0
         else:
             return -PI / 2.0
     else: # same row
         if (cw == 1 and tile1.position.x > tile0.position.x) or \
-           (cw == 0 and tile1.position.x < tile0.position.x):
+           (cw == -1 and tile1.position.x > tile0.position.x):
             return 0
         else:
             return PI
 
-func move_along(track_coords, cw):
+func move_along(track_coords, cw, delta):
     var t0 = tiles[track_coords.t0]
     var t1 = tiles[track_coords.t1]
     var t_vec = G.tilesize * (t1.coords - t0.coords)
     var t_dist = t_vec.length()
-    var dist_left_to_cover = G.trackspeed
+    var dist_left_to_cover = G.trackspeed * delta
     var dist_left_in_segment
     var new_t0
     var new_t1
@@ -153,8 +153,8 @@ func move_along(track_coords, cw):
             new_t0 = track_coords.t0
             new_t1 = track_coords.t1
         else:
-            new_t0 = (track_coords.t1 - 1 + len(tiles)) % len(tiles)
-            new_t1 = track_coords.t1
-            new_offset = 0
+            new_t0 = (track_coords.t0 - 1 + len(tiles)) % len(tiles)
+            new_t1 = track_coords.t0
+            new_offset = 1
     new_rotation = get_car_rotation(tiles[new_t0], tiles[new_t1], cw)
     return [TrackCoords.new(new_t0, new_t1, new_offset), new_rotation]
