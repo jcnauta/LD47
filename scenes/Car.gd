@@ -5,6 +5,7 @@ var track_coords = null
 var cw
 var in_out
 var v = Vector2(G.flyspeed, 0)
+#var v = Vector2()
 var target_rotation
 
 func _ready():
@@ -41,7 +42,7 @@ func update_track_state(tile):
 
 func set_track_coords(tcs):
     self.track_coords = tcs
-    self.position = current_track.global_position_from_coords(track_coords)
+    self.position = current_track.position_from_coords(track_coords)
 
 func _physics_process(delta):
     var prev_pos = position
@@ -68,8 +69,6 @@ func _on_Area2D_area_entered(area):
         current_track = current_tile.get_parent()
         track_coords = current_track.get_track_coords(current_tile)
         update_track_state(current_tile)
-        print("in out: " + str(in_out))
-        print("cw: " + str(cw))
         if cw == 1:
             $Sprite.flip_h = true
-        self.position = current_track.global_position_from_coords(track_coords)
+        self.position = current_track.position_from_coords(track_coords)

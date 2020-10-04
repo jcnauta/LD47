@@ -6,6 +6,7 @@ var TrackCoords = preload("res://TrackCoords.gd")
 var tiles = []
 var trackside = 1
 var turndir = 1
+var wrap_width
 
 # Add tiles from c0 up to c1, excluding c1.
 func intermediate_tiles(c0, c1):
@@ -13,11 +14,13 @@ func intermediate_tiles(c0, c1):
     if c0.x == c1.x: # same column
         for r in range(c0.y, c1.y, sign(c1.y - c0.y)):
             var new_tile = Tile.instance()
+            new_tile.track = self
             new_tile.set_coords(Vector2(c0.x, r))
             tiles.append(new_tile)
     else: # same row
         for c in range(c0.x, c1.x, sign(c1.x - c0.x)):
             var new_tile = Tile.instance()
+            new_tile.track = self
             new_tile.set_coords(Vector2(c, c0.y))
             tiles.append(new_tile)
     return tiles
@@ -109,8 +112,11 @@ func get_track_coords(tile): # returns a triplet (tile0_idx, tile1_idx, interpol
     var tile_idx = tiles.find(tile)
     return TrackCoords.new(tile_idx, (tile_idx + 1) % len(tiles), 0)
 
-func global_position_from_coords(track_coords):
-    return position + G.tilesize * (tiles[track_coords.t0].coords + track_coords.offset * (tiles[track_coords.t1].coords - tiles[track_coords.t0].coords))
+func position_from_coords(track_coords):
+    # track position + interpolate between tiles + offset for right wrapped copy
+    return position + \
+        G.tilesize * (tiles[track_coords.t0].coords + track_coords.offset * (tiles[track_coords.t1].coords - tiles[track_coords.t0].coords)) + \
+        Vector2(tiles[track_coords.t0].collision_area.position.x, 0)
 
 func get_car_rotation(tile0, tile1, cw):
     if tile0.position.x == tile1.position.x: # same column
@@ -161,13 +167,13 @@ func move_along(track_coords, cw, delta):
             new_offset = 1
     new_rotation = get_car_rotation(tiles[new_t0], tiles[new_t1], cw)
     return [TrackCoords.new(new_t0, new_t1, new_offset), new_rotation]
-    
-func _process(delta):
+
+func update_wrap():
     var cam_center = G.camera.get_camera_screen_center()
+    var margins = [cam_center - G.halfscreensize, cam_center + G.halfscreensize]
     for t in tiles:
-        if t.position.x > cam_center.x + G.wrap_width * G.tilesize - G.wrap_offset:
-            t.position.x -= G.level_tile_width * G.tilesize
-#            print("new position to left: " + str(position.x))
-        elif t.position.x < cam_center.x - G.wrap_width * G.tilesize - G.wrap_offset:
-            t.position.x += G.level_tile_width * G.tilesize
-#            print("new position to right: " + str(position.x))
+        t.draw_copies(margins)
+        t.update_collision_position(cam_center)
+
+func _process(delta):
+    update_wrap()

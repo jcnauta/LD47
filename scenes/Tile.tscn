@@ -8,9 +8,9 @@ extents = Vector2( 16, 16 )
 [node name="Tile" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
+
+[node name="Sprites" type="Node2D" parent="."]

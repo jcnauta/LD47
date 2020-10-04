@@ -43,22 +43,31 @@ func _ready():
         Vector2(-1, 2),
         Vector2(-1, 0)
     ]
+    var smallest = [
+        Vector2(0, 0),
+        Vector2(1, 0),
+        Vector2(1, 1),
+        Vector2(0, 1)
+    ]
     var coords_list = []
+# RECT
 #    var offsets_list = [Vector2(3, 1), Vector2(5, 5), Vector2(22, 2),
 #            Vector2(3, 15), Vector2(12, 10), Vector2(22, 14)]
+# BIG PLUSES
     var offsets_list = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2),
             Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
+#    var offsets_list = [Vector2(0, 0)]
+    var my_shape = plus_coords
     for off in offsets_list:
         var new_coords = []
-        for idx in len(plus_coords):
-            new_coords.append(plus_coords[idx] + off)
+        for idx in len(my_shape):
+            new_coords.append(my_shape[idx] + off)
         coords_list.append(new_coords)
         var track = Track.instance()
+        track.wrap_width = 900
         track.generate_tiles(new_coords)
         tracks.append(track)
         add_child(track)
     
     car = Car.instance()
     add_child(car)
-
-    G.set_level_width(90)

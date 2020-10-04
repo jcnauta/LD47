@@ -9,15 +9,10 @@ var rot_speed = 12
 var min_car_y = -80
 var max_car_y = 720
 
-var wrap_width
-var level_tile_width
-var wrap_offset = 480
+var halfscreensize = Vector2(480, 320)
+var screensize = Vector2(960, 640)
 
 var camera
-
-func set_level_width(level_tile_width):
-    self.level_tile_width = level_tile_width
-    wrap_width = floor(level_tile_width / 2) + 1
 
 func short_angle_dist(from, to):
     var max_angle = PI * 2
