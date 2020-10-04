@@ -65,11 +65,3 @@ func set_sprite():
     for spr in sprite_copies:
         spr.texture = the_texture
         spr.rotation = the_rotation
-
-func disable():
-    self.visible = false
-    collision_area.get_node("CollisionShape2D").disabled = true
-
-func enable():
-    self.visible = true
-    collision_area.get_node("CollisionShape2D").disabled = false

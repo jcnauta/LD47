@@ -16,7 +16,6 @@ func _ready():
     levels = create_levels()
     for level in levels:
         add_child(level)
-    levels[0].add_level_bin(0)
     car = Car.instance()
     add_child(car)
 
@@ -51,7 +50,7 @@ func _process(delta):
         next_level.add_level_bin(min_x_binned - width)
         min_x_binned = min_x_binned - width
     if margins[1] > max_x_binned:
-        next_level.add_level_bin(max_x_binned + width)
+        next_level.add_level_bin(max_x_binned)
         max_x_binned = max_x_binned + width
 
 func create_levels():

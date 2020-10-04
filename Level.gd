@@ -37,5 +37,6 @@ func add_level_bin(x_min):
     add_child(new_bin)
 
 func remove_level_bin(bin):
+    print("removing!")
     remove_child(bin)
     bin.queue_free()
