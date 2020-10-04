@@ -1,12 +1,15 @@
 extends Node2D
 
 var Tile = preload("res://scenes/Tile.tscn")
-var TrackCoords = preload("res://TrackCoords.gd")
+var TrackCoords = preload("res://scenes/TrackCoords.gd")
 
 var tiles = []
 var trackside = 1
 var turndir = 1
 var wrap_width
+var wrap_limits = []
+var level_idx
+var disabled = false
 
 # Add tiles from c0 up to c1, excluding c1.
 func intermediate_tiles(c0, c1):
@@ -168,12 +171,16 @@ func move_along(track_coords, cw, delta):
     new_rotation = get_car_rotation(tiles[new_t0], tiles[new_t1], cw)
     return [TrackCoords.new(new_t0, new_t1, new_offset), new_rotation]
 
+func set_wrap_width(ww):
+    wrap_width = ww
+
 func update_wrap():
     var cam_center = G.camera.get_camera_screen_center()
     var margins = [cam_center - G.halfscreensize, cam_center + G.halfscreensize]
     for t in tiles:
-        t.draw_copies(margins)
+#        t.draw_copies(cam_center)
         t.update_collision_position(cam_center)
 
-func _process(delta):
-    update_wrap()
+func add_to_bin(bin):
+    for t in tiles:
+        t.add_to_bin(bin)

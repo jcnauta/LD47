@@ -1,5 +1,7 @@
 extends Node2D
 
+var Pickup = preload("res://scenes/Pickup.gd")
+
 var current_track = null
 var track_coords = null
 var cw
@@ -64,8 +66,13 @@ func _physics_process(delta):
         position.y = G.min_car_y
 
 func _on_Area2D_area_entered(area):
-    if current_track == null:
-        var current_tile = area.get_parent()
+    var area_owner = area.get_parent()
+    if area_owner is Pickup:
+        print("Pickup!")
+        area_owner.queue_free()
+        G.set_next_level(1)
+    elif current_track == null:
+        var current_tile = area_owner
         current_track = current_tile.get_parent()
         track_coords = current_track.get_track_coords(current_tile)
         update_track_state(current_tile)
