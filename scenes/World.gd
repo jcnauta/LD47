@@ -28,13 +28,30 @@ func _ready():
         Vector2(6, 2),
         Vector2(0, 2)
     ]
+    var plus_coords = [
+        Vector2(0, 0),
+        Vector2(1, 0),
+        Vector2(1, 2),
+        Vector2(3, 2),
+        Vector2(3, 4),
+        Vector2(1, 4),
+        Vector2(1, 6),
+        Vector2(-1, 6),
+        Vector2(-1, 4),
+        Vector2(-3, 4),
+        Vector2(-3, 2),
+        Vector2(-1, 2),
+        Vector2(-1, 0)
+    ]
     var coords_list = []
-    var offsets_list = [Vector2(3, 1), Vector2(5, 5), Vector2(22, 2),
-            Vector2(3, 15), Vector2(12, 10), Vector2(22, 14)]
+#    var offsets_list = [Vector2(3, 1), Vector2(5, 5), Vector2(22, 2),
+#            Vector2(3, 15), Vector2(12, 10), Vector2(22, 14)]
+    var offsets_list = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2),
+            Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
     for off in offsets_list:
         var new_coords = []
-        for idx in len(rect_coords):
-            new_coords.append(rect_coords[idx] + off)
+        for idx in len(plus_coords):
+            new_coords.append(plus_coords[idx] + off)
         coords_list.append(new_coords)
         var track = Track.instance()
         track.generate_tiles(new_coords)

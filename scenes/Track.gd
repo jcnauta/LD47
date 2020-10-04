@@ -22,13 +22,19 @@ func intermediate_tiles(c0, c1):
             tiles.append(new_tile)
     return tiles
 
+func set_tile_neighbors():
+    for idx in len(tiles):
+        var curr_t = tiles[idx]
+        var prev_t = tiles[(idx - 1 + len(tiles)) % len(tiles)]
+        var next_t = tiles[(idx + 1) % len(tiles)]
+        curr_t.set_prev_and_next(prev_t, next_t)
+
 # "Inside" = 1
 # "Outside" = 0
 #Q1|Q0
 #-----
 #Q2|Q3
 func set_in_outs():
-    print("setting")
     var q0
     var q1
     var q2
@@ -57,12 +63,12 @@ func set_in_outs():
             if to_prev.y < 0:
                 q0 = 0
                 q3 = 0
-            elif to_prev.x > 0:
-                q0 = 1
-                q3 = 0
-            else:
+            elif to_prev.y > 0:
                 q0 = 1
                 q3 = 1
+            else:
+                q0 = 1
+                q3 = 0
         elif to_next.y < 0:
             q0 = 1
             q1 = 0
@@ -87,9 +93,7 @@ func set_in_outs():
             else:
                 q0 = 0
                 q1 = 1
-        print("setting " + str([q0, q1, q2, q3]))
         curr_t.set_in_outs([q0, q1, q2, q3])
-        
     
 func generate_tiles(coords):
     for idx in len(coords):
@@ -97,6 +101,7 @@ func generate_tiles(coords):
         var c_next = coords[(idx + 1) % len(coords)]
         tiles += intermediate_tiles(c_this, c_next)
     set_in_outs()
+    set_tile_neighbors()
     for t in tiles:
         add_child(t)
 
