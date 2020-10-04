@@ -51,11 +51,19 @@ func _physics_process(delta):
     if current_track == null:
         self.position += v * delta
     else:
+        if not $CartSound.playing:
+            $CartSound.play()
         var coords_and_rotation = current_track.move_along(track_coords, cw, delta)
         self.set_track_coords(coords_and_rotation[0])
         self.target_rotation = coords_and_rotation[1]
         rotation = G.lerp_angle(rotation, target_rotation, G.rot_speed * delta)
     if Input.is_action_just_pressed("jump") and current_track != null:
+        if $CartSound.playing:
+            $CartSound.stop()
+        if randi() % 2 == 0:
+            $JumpSound1.play()
+        else:
+            $JumpSound2.play()
         v = (position - prev_pos) / delta
         var jump_vec = Vector2(0.0, -1.0).rotated(rotation)
         v += jump_vec * G.jumpspeed
@@ -74,6 +82,10 @@ func _on_Area2D_area_entered(area):
     elif current_track == null:
         var current_tile = area_owner
         current_track = current_tile.get_parent()
+        if randi() % 2 == 0:
+            $LandSound1.play()
+        else:
+            $LandSound2.play()
         track_coords = current_track.get_track_coords(current_tile)
         update_track_state(current_tile)
         if cw == 1:
