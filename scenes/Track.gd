@@ -164,13 +164,10 @@ func move_along(track_coords, cw, delta):
     
 func _process(delta):
     var cam_center = G.camera.get_camera_screen_center()
-    if position.x > cam_center.x + G.wrap_width * G.tilesize - G.wrap_offset:
-        position.x -= G.level_tile_width * G.tilesize
-        print("new position to left: " + str(position.x))
-#        for t in tiles:
-#            t.position.x -= G.level_tile_width * G.tilesize
-    elif position.x < cam_center.x - G.wrap_width * G.tilesize - G.wrap_offset:
-        position.x += G.level_tile_width * G.tilesize
-        print("new position to right: " + str(position.x))
-#        for t in tiles:
-#            t.position.x += G.level_tile_width * G.tilesize
+    for t in tiles:
+        if t.position.x > cam_center.x + G.wrap_width * G.tilesize - G.wrap_offset:
+            t.position.x -= G.level_tile_width * G.tilesize
+#            print("new position to left: " + str(position.x))
+        elif t.position.x < cam_center.x - G.wrap_width * G.tilesize - G.wrap_offset:
+            t.position.x += G.level_tile_width * G.tilesize
+#            print("new position to right: " + str(position.x))
