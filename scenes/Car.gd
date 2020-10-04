@@ -12,6 +12,7 @@ func _ready():
     position = G.tilesize * Vector2(1, 7)
     if cw == 1:
         $Sprite.flip_h = true
+    G.camera = $Camera2D
 
 # Update the turning direction on the current track
 # cw == 1 means the tiles are traversed in list order,

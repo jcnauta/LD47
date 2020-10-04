@@ -1,16 +1,17 @@
 extends Node
 
 var tilesize = 32
-var flyspeed = 150
-var trackspeed = 300
-var jumpspeed = 200
-var rot_speed = 12
+var flyspeed = 300
+var trackspeed = 100
+var jumpspeed = 100
+var rot_speed = 6
 
 var min_car_y = -100
 var max_car_y = 1100
 
 var wrap_width
 var level_tile_width
+var wrap_offset = 480
 
 var camera
 

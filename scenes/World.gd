@@ -60,8 +60,5 @@ func _ready():
     
     car = Car.instance()
     add_child(car)
-    
-    G.camera = Cam.instance()
-    G.camera.set_target(car)
 
-    G.set_level_width(60)
+    G.set_level_width(90)
