@@ -6,6 +6,8 @@ var Level = preload("res://Level.gd")
 var LevelBin = preload("res://LevelBin.gd")
 
 var lvl_0_data = preload("res://levels/0.gd")
+var lvl_1_data = preload("res://levels/1.gd")
+var lvl_5_data = preload("res://levels/5.gd")
 
 var levels = []
 var x_to_bin = {}
@@ -14,14 +16,11 @@ var max_x_binned = 0
 
 var car
 
-func _init():
-    print("roar")
-
 func _ready():
-    print("crea")
     create_levels()
     for level in G.levels:
         add_child(level)
+    G.set_next_level(0)
     car = Car.instance()
     add_child(car)
 
@@ -133,11 +132,13 @@ func create_levels():
     var plus_offsets_0 = [Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
     var ruby_coords = [Vector2(0, 4), Vector2(4, 12)]
     var pain_coords = [Vector2(0, 15), Vector2(15, 4)]
-    var level_0 = Level.new([rect_shape, plus_shape], [rect_offsets_0, plus_offsets_0], ruby_coords, pain_coords, 900)
-    print("here")
+    var level_0 = Level.new()
     level_0.build_from_data(lvl_0_data.new().tracks)
     # BIG PLUSES
     var plus_offsets = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2),
             Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
-    var level_1 = Level.new([plus_shape], [plus_offsets], ruby_coords, pain_coords, 880)
-    G.levels = [level_0] #, level_1]
+    var level_1 = Level.new()
+    level_1.build_from_data(lvl_1_data.new().tracks)
+    var level_5 = Level.new()
+    level_5.build_from_data(lvl_5_data.new().tracks)
+    G.levels = [level_0, level_1, level_5]

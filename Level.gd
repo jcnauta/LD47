@@ -11,7 +11,7 @@ var tracks = []
 var items = []
 var wrap_width
 
-func _init(shapes, offsets, ruby_coords, pain_coords, ww):
+func _init():
     pass
 #    wrap_width = ww
 #    for idx in len(shapes):
@@ -62,6 +62,29 @@ func yank_track_from_tiles(tiles):
                 return [track_coords, []]
     return null
 
+func get_rubies():
+    var rubies = []
+    for i in items:
+        if i is PickupClass:
+            rubies.append(i)
+    return rubies
+
+func yank_ruby(tiles):
+    for y in len(tiles):
+        for x in len(tiles[0]):
+            if tiles[y][x] == 2:
+                tiles[y][x] = 0
+                return Vector2(x, y)
+    return null
+    
+func yank_axe(tiles):
+    for y in len(tiles):
+        for x in len(tiles[0]):
+            if tiles[y][x] == 3:
+                tiles[y][x] = 0
+                return Vector2(x, y)
+    return null
+
 func build_from_data(track_layers):
     for tiles in track_layers:
         # identify tracks one by one, remove when adding to level
@@ -75,6 +98,22 @@ func build_from_data(track_layers):
             add_child(track)
             new_track_coords_and_twisties = yank_track_from_tiles(tiles)
             print(new_track_coords_and_twisties)
+        var ruby_coords = yank_ruby(tiles)
+        while ruby_coords != null:
+            var ruby = Pickup.instance()
+            ruby.set_coords(ruby_coords)
+            items.append(ruby)
+            add_child(ruby)
+            ruby_coords = yank_ruby(tiles)
+        var axe_coords = yank_axe(tiles)
+        while axe_coords != null:
+            var pain = Pain.instance()
+            pain.set_coords(axe_coords)
+            items.append(pain)
+            add_child(pain)
+            axe_coords = yank_axe(tiles)
+            
+            
 
 func _process(delta):
     for track in tracks:

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import json
+import sys
 
-with open("./levels/0.json") as file:
+with open("./levels/" + sys.argv[1] + ".json") as file:
 	data = json.load(file)
 	h = data["height"]
 	w = data["width"]

@@ -16,7 +16,7 @@ var halfscreensize = Vector2(480, 320)
 var screensize = Vector2(960, 640)
 
 var levels = []
-var next_lvl_idx = 0
+var next_lvl_idx
 var next_lvl
 var rubies = 0
 var ruby_goal = 0
