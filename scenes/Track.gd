@@ -176,9 +176,7 @@ func set_wrap_width(ww):
 
 func update_wrap():
     var cam_center = G.camera.get_camera_screen_center()
-    var margins = [cam_center - G.halfscreensize, cam_center + G.halfscreensize]
     for t in tiles:
-#        t.draw_copies(cam_center)
         t.update_collision_position(cam_center)
 
 func add_to_bin(bin):

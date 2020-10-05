@@ -9,9 +9,23 @@ var sprite_horz = preload("res://images/horizontal_rail.png")
 var sprite_vert = preload("res://images/vertical_rail.png")
 var track
 var collision_area
+var collision_0
+var collision_1
 
 func _ready():
     collision_area = $Area2D
+    collision_0 = $Area2D/CollisionShape2D
+    collision_1 = $Area2D/CollisionShape2D2
+    if the_texture == sprite_corner:
+        collision_0.rotation = PI + the_rotation
+        collision_1.rotation = 0.5 * PI + the_rotation
+    elif the_texture == sprite_horz:
+        collision_0.rotation = PI
+    elif the_texture == sprite_vert:
+        collision_0.rotation = 0.5 * PI
+        collision_1.rotation = -0.5 * PI
+    else:
+        print("strange, what texture does this tile have?")
 
 func set_coords(c):
     self.coords = c
