@@ -3,8 +3,8 @@ extends "res://scenes/Wrapping.gd"
 var coords
 
 func _ready():
-    the_texture = load("res://icon.png")
-    set_coords(Vector2(0, 0))
+    the_texture = load("res://images/ruby1.png")
+    set_coords(Vector2(0, 5))
     print(position)
 
 func update_wrap():

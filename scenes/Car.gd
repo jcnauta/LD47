@@ -87,9 +87,7 @@ func _physics_process(delta):
 func _on_Area2D_area_entered(area):
     var area_owner = area.get_parent()
     if area_owner is Pickup:
-        print("Pickup!")
-        area_owner.remove()
-        G.set_next_level(G.next_lvl_idx + 1)
+        pass
     elif current_track == null:
         var current_tile = area_owner
         current_track = current_tile.get_parent()
@@ -102,3 +100,10 @@ func _on_Area2D_area_entered(area):
         if cw == 1:
             $Sprite.flip_h = true
         self.position = current_track.position_from_coords(track_coords)
+
+func _on_Boglin_area_entered(area):
+    var area_owner = area.get_parent()
+    if area_owner is Pickup:
+        print("Pickup!")
+        area_owner.remove()
+        G.set_next_level(G.next_lvl_idx + 1)
