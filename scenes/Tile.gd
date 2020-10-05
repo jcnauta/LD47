@@ -33,6 +33,21 @@ func set_coords(c):
 
 func set_in_outs(in_outs):
     self.in_outs = in_outs
+    # Draw debug squares
+#    for iodx in len(in_outs):
+#        var marker = ColorRect.new()
+#        marker.rect_size = Vector2(16, 16)
+#        if iodx == 0:
+#            marker.rect_position = Vector2(0, -16)
+#        elif iodx == 1:
+#            marker.rect_position = Vector2(-16, -16)
+#        elif iodx == 2:
+#            marker.rect_position = Vector2(-16, 0)
+#        else:
+#            marker.rect_position = Vector2(0, 0)
+#        if in_outs[iodx] == 1:
+#            marker.color = Color.rebeccapurple
+#        add_child(marker)
 
 func set_prev_and_next(prev_t, next_t):
     self.prev_t = prev_t

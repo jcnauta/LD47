@@ -53,55 +53,55 @@ func set_in_outs():
         var to_prev = prev_t.position - curr_t.position
         if to_next.x > 0:
             q3 = 1
-            q0 = 0
+            q0 = -1
             if to_prev.y < 0:
                 q1 = 1
                 q2 = 1
             elif to_prev.x < 0:
-                q1 = 0
+                q1 = -1
                 q2 = 1
             else:
-                q1 = 0
-                q2 = 0
+                q1 = -1
+                q2 = -1
         elif to_next.x < 0:
             q1 = 1
-            q2 = 0
+            q2 = -1
             if to_prev.y < 0:
-                q0 = 0
-                q3 = 0
+                q0 = -1
+                q3 = -1
             elif to_prev.y > 0:
                 q0 = 1
                 q3 = 1
             else:
                 q0 = 1
-                q3 = 0
+                q3 = -1
         elif to_next.y < 0:
             q0 = 1
-            q1 = 0
+            q1 = -1
             if to_prev.x < 0:
                 q2 = 1
                 q3 = 1
             elif to_prev.x > 0:
-                q2 = 0
-                q3 = 0
+                q2 = -1
+                q3 = -1
             else:
-                q2 = 0
+                q2 = -1
                 q3 = 1
         elif to_next.y > 0:
             q2 = 1
-            q3 = 0
+            q3 = -1
             if to_prev.x < 0:
-                q0 = 0
-                q1 = 0
+                q0 = -1
+                q1 = -1
             elif to_prev.x > 0:
                 q0 = 1
                 q1 = 1
             else:
-                q0 = 0
+                q0 = -1
                 q1 = 1
         curr_t.set_in_outs([q0, q1, q2, q3])
     
-func generate_tiles(coords):
+func generate_tiles(coords, twisties = []):
     for idx in len(coords):
         var c_this = coords[idx]
         var c_next = coords[(idx + 1) % len(coords)]

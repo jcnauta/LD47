@@ -5,15 +5,22 @@ var Car = preload("res://scenes/Car.tscn")
 var Level = preload("res://Level.gd")
 var LevelBin = preload("res://LevelBin.gd")
 
+var lvl_0_data = preload("res://levels/0.gd")
+
+var levels = []
 var x_to_bin = {}
 var min_x_binned = 0
 var max_x_binned = 0
-var levels
+
 var car
 
+func _init():
+    print("roar")
+
 func _ready():
-    levels = create_levels()
-    for level in levels:
+    print("crea")
+    create_levels()
+    for level in G.levels:
         add_child(level)
     car = Car.instance()
     add_child(car)
@@ -81,7 +88,7 @@ func _process(delta):
 #                lvl.remove_level_bin(right_bin)
 #            max_x_binned = new_max_x_binned
     # Add bins if required
-    var next_level = levels[G.next_lvl_idx]
+    var next_level = G.levels[G.next_lvl_idx]
     var width = next_level.wrap_width
     if margins[0] < min_x_binned:
         var new_x = min_x_binned - width
@@ -122,13 +129,15 @@ func create_levels():
         Vector2(1, 1),
         Vector2(0, 1)
     ]
-    var rect_offsets = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2),
-                Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
-    var level_0 = Level.new([rect_shape], [rect_offsets], 900)
+    var rect_offsets_0 = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2)]
+    var plus_offsets_0 = [Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
+    var ruby_coords = [Vector2(0, 4), Vector2(4, 12)]
+    var pain_coords = [Vector2(0, 15), Vector2(15, 4)]
+    var level_0 = Level.new([rect_shape, plus_shape], [rect_offsets_0, plus_offsets_0], ruby_coords, pain_coords, 900)
+    print("here")
+    level_0.build_from_data(lvl_0_data.new().tracks)
     # BIG PLUSES
     var plus_offsets = [Vector2(3, 1), Vector2(10, 8), Vector2(22, 2),
             Vector2(3, 15), Vector2(12, 16), Vector2(22, 14)]
-    var level_1 = Level.new([plus_shape], [plus_offsets], 880)
-    var levels = [level_0, level_1]
-    G.total_levels = len(levels)
-    return levels
+    var level_1 = Level.new([plus_shape], [plus_offsets], ruby_coords, pain_coords, 880)
+    G.levels = [level_0] #, level_1]

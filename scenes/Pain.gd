@@ -4,7 +4,6 @@ var coords
 
 func _ready():
     the_texture = load("res://images/axe.png")
-    set_coords(Vector2(10, 7))
 
 func update_wrap():
     var cam_center = G.camera.get_camera_screen_center()
@@ -15,7 +14,7 @@ func set_coords(c):
     self.position = G.tilesize * c
 
 func _process(delta):
-#    rotation -= 5.0 * delta
+    $Area2D.rotation -= 5.0 * delta
     for spr in sprite_copies:
         spr.rotate(-5.0 * delta)
     update_wrap()
